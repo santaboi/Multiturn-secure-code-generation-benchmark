@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Benchmarking Correctness and Security in Multi-Turn Code Generation</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .navigation-buttons {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin-top: 20px;
+      max-width: 900px; /* Example: match Bulma's container max-width at certain breakpoints */
+      margin: 0 auto; /* Center align the div */
+    }
+    
+    .nav-button {
+    flex: 1;
+    display: inline-flex;
+    align-items: flex-end; /* Align items to the end (bottom) of the container */
+    justify-content: center;
+    padding: 20px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: none;
+    cursor: pointer;
+    transition: all 0.5s ease;
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 10px;
+    height: 280px;
+    border-radius: 25px;
+    filter: grayscale(100%);
+    text-decoration: none; /* Removes underline from links */
+    position: relative; /* Ensures the button is positioned relatively for absolute positioning of text */
+  }
+  
+  .button-text {
+    background-color: rgba(128, 128, 128, 0.5); /* Semi-transparent gray */
+    color: white; /* Text color */
+    padding: 5px 10px; /* Adjust padding for readability */
+    border-radius: 5px; /* Optional: adds rounded corners to the text background */
+    position: absolute; /* Position the text absolutely within the button */
+    bottom: 10px; /* Distance from the bottom of the button */
+  }
+  
+  .nav-button:hover .button-text {
+    color: black; /* Changes text color on hover */
+    background-color: rgba(255, 255, 255, 1); 
+  }
+  .nav-button:hover {
+    filter: grayscale(0%);
+  }
+    
+    #realworld-button {
+      background-image: url('./resources/button_realworld_gray.png');
+    }
+
+    #realworld-button:hover {
+      background-image: url('./resources/button_realworld_gray.png');
+    }
+    
+    #simulated-button {
+      background-image: url('./resources/button_simulated_gray.png');
+    }
+    
+    #simulated-button:hover {
+      background-image: url('./resources/button_simulated_gray.png');
+    }
+
+    #driving-button {
+      background-image: url('./resources/driving_button.png');
+    }
+    
+    #code-button {
+      background-image: url('./resources/codebase_button.png');
+    }
+    
+    </style>
+
+  <!-- Styling -->
+  <style>
+    .video-carousel {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  
+    /* Square Navigation Buttons */
+    .nav-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      font-size: 24px;
+      padding: 15px 20px;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+    }
+  
+    .nav-button.left {
+      left: -30px;
+    }
+  
+    .nav-button.right {
+      right: -30px;
+    }
+  
+    /* Dots Navigation */
+    .dots-container {
+      margin-top: 15px;
+    }
+  
+    .dot {
+      height: 10px;
+      width: 10px;
+      margin: 0 6px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      cursor: pointer;
+    }
+  
+    .active-dot {
+      background-color: #4285f4;
+    }
+  
+    /* Fade transition */
+    .video-container {
+      display: none;
+      animation: fadeEffect 0.5s;
+    }
+  
+    @keyframes fadeEffect {
+      from {opacity: 0.4;}
+      to {opacity: 1;}
+    }
+  </style>
+
+<style>
+  body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+  }
+  .container {
+      margin-bottom: 30px;
+  }
+  .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+  }
+  .btn {
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      border-radius: 5px;
+  }
+  .btn:hover {
+      opacity: 0.8;
+  }
+  .display {
+      margin-top: 20px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+  }
+</style>
+
+<style>
+  .responsive-logo {
+    height: 150px;
+    margin-right: 24px;
+    max-width: 100%;
+  }
+
+  @media (max-width: 600px) {
+    .responsive-logo {
+      height: 80px; /* or any value that looks good on mobile */
+      margin-right: 12px;
+    }
+  }
+</style>
+
+<style>
+  /* Global max-width for all main content */
+  .hero .container,
+  .section .container,
+  .notification .container,
+  .footer .container {
+    max-width: 900px; /* Adjust this value as needed */
+    margin: 0 auto;
+  }
+  
+  /* Ensure the scrollable table section respects the max width */
+  .scrollable-table-section {
+    max-height: 600px;
+    overflow-y: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Optional: Add some padding on very small screens */
+  @media (max-width: 768px) {
+    .hero .container,
+    .section .container,
+    .notification .container,
+    .footer .container {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+</style>
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container">
+      <div class="columns is-centered">
+        
+        <div class="column has-text-centered">
+          <div style="display: flex; align-items: center; justify-content: center;">
+            <img src="./resources/temp-logo.png" alt="Logo" class="responsive-logo">
+            <h1 class="title is-1 publication-title" style="margin: 0;">Benchmarking Correctness and Security in Multi-Turn Code Generation</h1>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a target="_blank" href="https://ruchitrawal.github.io/">Ruchit Rawal</a>&nbsp;&nbsp;
+              <a target="_blank" href="https://santaboi.github.io/">Jeffrey Yang Fan Chiang</a>&nbsp;&nbsp;
+              <a target="_blank" >Jeffery Siyuan Tian</a>&nbsp;&nbsp;
+              <a target="_blank" >Aastha Mahajan</a>&nbsp;&nbsp;
+              <a target="_blank" href="https://www.cs.umd.edu/~tomg/">Tom Goldstein</a>&nbsp;&nbsp;
+              <a target="_blank" href="https://surrealyz.github.io/">Yizheng Chen</a>&nbsp;&nbsp;
+              <br />University of Maryland, College Park
+            </span>
+          </div>
+        <div class="column has-text-centered">
+        <div class="publication-links">
+
+
+          <!-- PDF Link. -->
+          <span class="link-block">
+            <a href="resources/MT-Sec0523.pdf"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                  <i class="fas fa-file-pdf"></i>
+              </span>
+              <span>Paper</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="TODO"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                  <i class="ai ai-arxiv"></i>
+              </span>
+              <span>arXiv</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://huggingface.co/datasets/ai-sec-lab/mt-sec"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                  <img src="./resources/huggingface.png" alt="HF Logo" style="width: 20px; height: 20px;">
+              </span>
+              <span>HF Dataset</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="https://github.com/JARVVVIS/mt-sec-code"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                <img src="./resources/github-mark.png" alt="GitHub Logo" style="width: 20px; height: 20px;">
+              </span>
+              <span>Code</span>
+            </a>
+          </span>
+          <!-- bibtex Link. -->
+          <span class="link-block">
+            <a href="#BibTeX"
+                class="external-link button is-normal is-rounded is-dark">
+              <span class="icon">
+                  <i class="fas fa-book"></i>
+              </span>
+              <span>Bibtex</span>
+            </a>
+          </span>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+</section>
+
+
+
+<section class="section">
+  <div class="container">
+  
+    <!-- Abstract -->
+    <br /><br />
+    <h1 class="title is-3">
+      Can LLMs Generate Correct and Secure Code in Multi-turn Settings?
+    </h1>
+    <br />          
+    <div class="content has-text-justified">
+      <figure>
+        <img src="./resources/single-multi.png" style="width: 100%; border-radius: 10px;" alt="llm_and_webagent">
+        <figcaption>
+          <!-- A comparison of single-turn coding to multi-turn scenarios, with three different
+          interaction types. Our proposed dataset contains multi-turn conversations that are semantically
+          aligned with their single-turn counterparts, sharing the same requirements. The same unit tests are
+          applied to both to ensure a fair evaluation. -->
+          In real-world coding, developers often interact with LLMs in multi-turn settings. Can these AI coding systems generate correct and secure code in multi-turn settings?
+          As our best knowledge, our MT-Sec is the first benchmark to provide systematic comparison between single-turn and multi-turn settings with shared test cases in both correctness and security.
+          This help us understand in the exact same task, model can do fairly well in single-turn settings, but drop significantly in multi-turn settings.
+        </figcaption>
+      </figure>
+    </div>
+    <br /><br /><br /><br />
+    
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-thirds-fourth">
+        <br /><br />
+        <h3 class="title is-3">
+          MT-Sec Leaderboard
+        </h3>
+        <div class="scrollable-table-section">
+          <div class="content has-text-justified">
+            <div class="table-container">
+              <table class="table is-bordered is-striped is-hoverable is-fullwidth is-size-4" style="font-size: 0.95em;">
+              <thead>
+                <tr>
+                  <th rowspan="2">Model</th>
+                  <th colspan="2">Single-Turn (ST)</th>
+                  <th colspan="2">MT-Expansion</th>
+                  <th colspan="2">MT-Editing</th>
+                  <th colspan="2">MT-Refactor</th>
+                </tr>
+                <tr>
+                  <th>C&amp;S ↑</th>
+                  <th>C&amp;I ↓</th>
+                  <th>C&amp;S ↑</th>
+                  <th>C&amp;I ↓</th>
+                  <th>C&amp;S ↑</th>
+                  <th>C&amp;I ↓</th>
+                  <th>C&amp;S ↑</th>
+                  <th>C&amp;I ↓</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup></td>
+                  <td><b>57.5</b></td><td>14.3</td>
+                  <td>41.4</td><td>16.2</td>
+                  <td>46.9</td><td>13.7</td>
+                  <td>56.9</td><td>14.2</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O4 Mini<sup>T</sup></td>
+                  <td><b>56.8</b></td><td>14.5</td>
+                  <td>38.7</td><td>14.5</td>
+                  <td>48.1</td><td>14.5</td>
+                  <td><b>58.6</b></td><td>13.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3 Mini<sup>T</sup></td>
+                  <td><b>55.8</b></td><td>15.2</td>
+                  <td><span class="has-background-danger-light">34.7<br><small style="color:#b00;">(-21.1)</small></span></td><td>19.0</td>
+                  <td>44.9</td><td>14.7</td>
+                  <td>54.4</td><td>14.7</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup></td>
+                  <td>54.8</td><td>16.0</td>
+                  <td><span class="has-background-danger-light">34.4<br><small style="color:#b00;">(-20.3)</small></span></td><td>18.7</td>
+                  <td>43.9</td><td>16.2</td>
+                  <td>54.4</td><td>14.5</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet<sup>T</sup></td>
+                  <td>53.5</td><td>16.0</td>
+                  <td>38.9</td><td>19.2</td>
+                  <td>45.4</td><td>17.5</td>
+                  <td>54.9</td><td>14.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4.1<sup>T</sup></td>
+                  <td>53.5</td><td>12.7</td>
+                  <td>34.9</td><td><span class="has-background-danger-light">19.2<br><small style="color:#b00;">(+6.5)</small></span></td><td>46.6</td>
+                  <td>13.0</td><td>55.9</td><td>13.7</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Pro<sup>T</sup></td>
+                  <td>53.2</td><td>12.8</td>
+                  <td>34.9</td><td>18.2</td>
+                  <td>47.8</td><td>11.6</td>
+                  <td>55.4</td><td><b>12.1</b></td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Pro</td>
+                  <td>52.8</td><td>12.1</td>
+                  <td><b>43.1</b></td><td><b>11.2</b></td>
+                  <td>43.6</td><td>10.5</td>
+                  <td><b>56.1</b></td><td>13.2</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Flash<sup>T</sup></td>
+                  <td>52.5</td><td>12.5</td>
+                  <td>36.4</td><td>16.5</td>
+                  <td>41.4<br><span class="has-background-danger-light" style="color:#b00;">(-11.1)</span></td><td>15.5</td>
+                  <td>50.4</td><td>15.5<br><span class="has-background-danger-light" style="color:#b00;">(+3.0)</span></td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4o</td>
+                  <td>52.2</td><td>13.5</td>
+                  <td><span class="has-background-danger-light">31.7<br><small style="color:#b00;">(-20.6)</small></span></td><td>17.5</td>
+                  <td>40.1<br><span class="has-background-danger-light" style="color:#b00;">(-12.1)</span></td><td>16.0</td>
+                  <td>50.9</td><td>12.7</td>
+                </tr>
+                <!--checked until this point (below might be wrong)-->
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>32B</sub></td>
+                  <td>51.5</td><td>13.7</td>
+                  <td>33.9</td><td>18.0</td>
+                  <td>42.9</td><td>13.9</td>
+                  <td>51.6</td><td>14.7</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-R1<sup>T</sup></td>
+                  <td>51.3</td><td>15.3</td>
+                  <td>31.2</td><td>17.0</td>
+                  <td><span class="has-background-danger-light">36.8<br><small style="color:#b00;">(-13.4)</small></span></td><td>15.0</td>
+                  <td><span class="has-background-danger-light">47.9<br><small style="color:#b00;">(-2.4)</small></span></td><td>14.2</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1 Mini<sup>T</sup></td>
+                  <td>49.8</td><td>14.6</td>
+                  <td>37.0</td><td>19.4</td>
+                  <td>45.6</td><td>13.6</td>
+                  <td>54.2</td><td>13.7</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet</td>
+                  <td>48.6</td><td>15.8</td>
+                  <td>37.9</td><td>15.8</td>
+                  <td>45.0</td><td>14.7</td>
+                  <td>51.4</td><td>14.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-V3</td>
+                  <td>46.0</td><td>15.8</td>
+                  <td>34.6</td><td>15.8</td>
+                  <td>41.5</td><td>14.7</td>
+                  <td>49.0</td><td>14.3</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.5 Sonnet</td>
+                  <td>45.8</td><td><b>12.0</b></td>
+                  <td>34.9</td><td>14.7</td>
+                  <td>37.9</td><td>14.7</td>
+                  <td>47.1</td><td><b>12.0</b></td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Flash</td>
+                  <td>41.9</td><td><b>10.3</b></td>
+                  <td><span class="has-background-danger-light">16.0<br><small style="color:#b00;">(+5.7)</small></span></td><td>11.2</td>
+                  <td>34.9</td><td>15.7</td>
+                  <td><span class="has-background-danger-light">15.5<br><small style="color:#b00;">(+5.2)</small></span></td><td>15.5</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>14B</sub></td>
+                  <td>40.9</td><td>13.9</td>
+                  <td>15.7</td><td>21.7</td>
+                  <td>34.9</td><td>15.7</td>
+                  <td>44.4</td><td>13.5</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>7B</sub></td>
+                  <td>44.2</td><td>14.0</td>
+                  <td><span class="has-background-danger-light">21.2<br><small style="color:#b00;">(+6.4)</small></span></td><td>17.0</td>
+                  <td><span class="has-background-danger-light">20.7<br><small style="color:#b00;">(+5.9)</small></span></td><td>17.0</td>
+                  <td>43.6</td><td>17.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub></td>
+                  <td>42.0</td><td>14.1</td>
+                  <td>17.0</td><td>18.6</td>
+                  <td>28.6</td><td>17.0</td>
+                  <td>41.0</td><td>17.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>2B</sub></td>
+                  <td>36.0</td><td>14.0</td>
+                  <td>18.0</td><td>18.0</td>
+                  <td>28.7</td><td>17.0</td>
+                  <td>39.0</td><td>17.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.8B</sub></td>
+                  <td>30.0</td><td>14.0</td>
+                  <td>17.0</td><td>19.5</td>
+                  <td>29.4</td><td>17.0</td>
+                  <td>35.0</td><td>20.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>7B</sub></td>
+                  <td>28.0</td><td>14.0</td>
+                  <td>17.0</td><td>19.5</td>
+                  <td>29.4</td><td>17.0</td>
+                  <td>32.0</td><td>20.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>3B</sub></td>
+                  <td>22.0</td><td>14.0</td>
+                  <td>17.0</td><td>19.5</td>
+                  <td>25.0</td><td>17.0</td>
+                  <td>27.0</td><td>20.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub></td>
+                  <td>20.0</td><td>14.0</td>
+                  <td>17.0</td><td>19.5</td>
+                  <td>25.0</td><td>17.0</td>
+                  <td>25.4</td><td>17.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub></td>
+                  <td>18.0</td><td>14.0</td>
+                  <td>17.0</td><td>19.5</td>
+                  <td>25.0</td><td>17.0</td>
+                  <td>25.4</td><td>17.0</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub></td>
+                  <td>8.0</td><td>22.0</td>
+                  <td>7.8</td><td>17.5</td>
+                  <td>8.0</td><td>17.5</td>
+                  <td><span class="has-background-danger-light">7.0<br><small style="color:#b00;">(-6.0)</small></span></td><td>17.1</td>
+                </tr>
+                <tr>
+                  <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>0.5B</sub></td>
+                  <td>5.2</td><td>15.0</td>
+                  <td>4.0</td><td><b>6.0</b></td>
+                  <td>4.2</td><td><b>8.0</b></td>
+                  <td><span class="has-background-danger-light">2.5<br><small style="color:#b00;">(-2.8)</small></span></td><td>9.7</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 0.9em; text-align: left;">
+        “All models show sharp declines in correctness & security when moving from single-turn to multi-turn coding — even top models drop by 20–27%.”
+      </p>
+    </div>
+</section>
+
+
+<div class="notification is-warning is-light">
+  <div class="container">
+    <div class="content has-text-left" style="font-size: 1.1em; line-height: 1.8;">
+      <h3 class="title is-4 has-text-centered" style="margin-bottom: 1.5rem; color: #363636;">
+        MT-Sec at a Glance
+      </h3>
+      
+      <p style="color: #363636;">
+        📊 <strong>2,376 multi-turn coding tasks</strong>, <strong>6 programming languages</strong>, <strong>27 critical security vulnerabilities (CWEs)</strong><br>
+
+        🏗️ Built on top of <strong>SECCODEPLT</strong> and <strong>BAXBENCH</strong><br>
+
+        🔄 Captures three common vibe-coding interaction types:<br>
+        • <strong>Expansion</strong> – gradually adding features<br>
+        • <strong>Editing</strong> – iterative fixes and pivots<br>
+        • <strong>Refactoring</strong> – restructuring for clarity and modularity<br>
+
+        🤖 Evaluated <strong>32 LLMs</strong> and <strong>3 coding agents</strong> (Aider, Codex, OpenHands)
+      </p>
+    </div>
+  </div>
+</div>
+
+<section class="section" id="BibTeX">
+  <div class="content has-text-justified">
+    <div class="container is-max-desktop content">
+      <h2 class="title">BibTeX</h2>
+      <pre><code>@article{Todo}
+      </code></pre>
+    </div>
+  </div>
+</section>
+  
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>Source code credit to <a href="https://nerfies.github.io/"><span class="dnerf">Nerfies</span></a>.</p>
+    </div>
+  </div>
+</footer>
+
+
+</body>
+</html>
