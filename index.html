@@ -283,6 +283,40 @@
   #detailed-table {
     display: none;
   }
+
+  /* Sortable table headers */
+  .sortable {
+    cursor: pointer;
+    position: relative;
+    user-select: none;
+    transition: background-color 0.2s ease;
+  }
+
+  .sortable:hover {
+    background-color: #f0f8ff;
+  }
+
+  .sortable.active {
+    background-color: #3396D3;
+    color: white;
+  }
+
+  .sort-arrow {
+    display: inline-block;
+    margin-left: 5px;
+    font-size: 0.8em;
+    opacity: 0.7;
+  }
+
+  .sort-arrow.hidden {
+    opacity: 0;
+  }
+
+  /* Parent column header highlighting */
+  .parent-active {
+    background-color: #3396D3 !important;
+    color: white !important;
+  }
 </style>
 
 </head>
@@ -419,10 +453,10 @@
                     <th colspan="2">Multi-Turn (MT)</th>
                   </tr>
                   <tr>
-                    <th>C&amp;S ↑</th>
-                    <th>C&amp;I ↓</th>
-                    <th>C&amp;S ↑</th>
-                    <th>C&amp;I ↓</th>
+                    <th class="sortable" onclick="sortTable('averaged', 1)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 2)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
+                    <th class="sortable active" onclick="sortTable('averaged', 3)">C&amp;S <span class="sort-arrow">↓</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 4)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -688,14 +722,14 @@
                 <th colspan="2">MT-Refactor</th>
               </tr>
               <tr>
-                <th>C&amp;S ↑</th>
-                <th>C&amp;I ↓</th>
-                <th>C&amp;S ↑</th>
-                <th>C&amp;I ↓</th>
-                <th>C&amp;S ↑</th>
-                <th>C&amp;I ↓</th>
-                <th>C&amp;S ↑</th>
-                <th>C&amp;I ↓</th>
+                <th class="sortable" onclick="sortTable('detailed', 1)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 2)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 3)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 4)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 5)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 6)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 7)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 8)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
               </tr>
             </thead>
             <tbody>
@@ -1181,6 +1215,12 @@ function showAveragedTable() {
   
   document.getElementById('averaged-btn').classList.add('active');
   document.getElementById('detailed-btn').classList.remove('active');
+  
+  // Apply default sorting for averaged table (Multi-Turn C&S)
+  if (averagedTableData.length > 0) {
+    currentSortColumn.averaged = { column: 3, direction: 'desc' };
+    sortTable('averaged', 3);
+  }
 }
 
 function showDetailedTable() {
@@ -1189,7 +1229,200 @@ function showDetailedTable() {
   
   document.getElementById('averaged-btn').classList.remove('active');
   document.getElementById('detailed-btn').classList.add('active');
+  
+  // Apply default sorting for detailed table (Single-Turn C&S)
+  if (detailedTableData.length > 0) {
+    currentSortColumn.detailed = { column: 1, direction: 'desc' };
+    sortTable('detailed', 1);
+  }
 }
+
+// Table sorting functionality
+let averagedTableData = [];
+let detailedTableData = [];
+let currentSortColumn = { averaged: { column: 3, direction: 'desc' }, detailed: { column: 1, direction: 'desc' } };
+
+function extractTableData() {
+  // Extract averaged table data
+  const averagedTable = document.querySelector('#averaged-table tbody');
+  averagedTableData = [];
+  
+  const averagedRows = averagedTable.querySelectorAll('tr');
+  averagedRows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    if (cells.length > 0) {
+      averagedTableData.push({
+        model: cells[0].innerHTML,
+        stCS: parseFloat(cells[1].textContent),
+        stCSHtml: cells[1].innerHTML,
+        stCI: parseFloat(cells[2].textContent),
+        stCIHtml: cells[2].innerHTML,
+        mtCS: parseFloat(cells[3].textContent),
+        mtCSHtml: cells[3].innerHTML,
+        mtCI: parseFloat(cells[4].textContent),
+        mtCIHtml: cells[4].innerHTML
+      });
+    }
+  });
+  
+  // Extract detailed table data
+  const detailedTable = document.querySelector('#detailed-table tbody');
+  detailedTableData = [];
+  
+  const detailedRows = detailedTable.querySelectorAll('tr');
+  detailedRows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    if (cells.length > 0) {
+      detailedTableData.push({
+        model: cells[0].innerHTML,
+        stCS: parseFloat(cells[1].textContent),
+        stCSHtml: cells[1].innerHTML,
+        stCI: parseFloat(cells[2].textContent),
+        stCIHtml: cells[2].innerHTML,
+        mtExpCS: parseFloat(cells[3].textContent),
+        mtExpCSHtml: cells[3].innerHTML,
+        mtExpCI: parseFloat(cells[4].textContent),
+        mtExpCIHtml: cells[4].innerHTML,
+        mtEditCS: parseFloat(cells[5].textContent),
+        mtEditCSHtml: cells[5].innerHTML,
+        mtEditCI: parseFloat(cells[6].textContent),
+        mtEditCIHtml: cells[6].innerHTML,
+        mtRefCS: parseFloat(cells[7].textContent),
+        mtRefCSHtml: cells[7].innerHTML,
+        mtRefCI: parseFloat(cells[8].textContent),
+        mtRefCIHtml: cells[8].innerHTML
+      });
+    }
+  });
+}
+
+function sortTable(tableType, columnIndex) {
+  const data = tableType === 'averaged' ? averagedTableData : detailedTableData;
+  
+  // Column mapping
+  const columnKeys = tableType === 'averaged' 
+    ? ['model', 'stCS', 'stCI', 'mtCS', 'mtCI']
+    : ['model', 'stCS', 'stCI', 'mtExpCS', 'mtExpCI', 'mtEditCS', 'mtEditCI', 'mtRefCS', 'mtRefCI'];
+  
+  const sortKey = columnKeys[columnIndex];
+  
+  // Determine direction based on column type: C&S = high to low (desc), C&I = low to high (asc)
+  const isCSColumn = sortKey.includes('CS');
+  const direction = isCSColumn ? 'desc' : 'asc';
+  
+  // Update current sort state
+  currentSortColumn[tableType] = { column: columnIndex, direction: direction };
+  
+  // Sort data
+  data.sort((a, b) => {
+    const aVal = a[sortKey];
+    const bVal = b[sortKey];
+    
+    if (direction === 'desc') {
+      return bVal - aVal;  // High to low for C&S
+    } else {
+      return aVal - bVal;  // Low to high for C&I
+    }
+  });
+  
+  // Rebuild table
+  rebuildTable(tableType);
+  updateSortIndicators(tableType, columnIndex, direction);
+}
+
+function rebuildTable(tableType) {
+  const data = tableType === 'averaged' ? averagedTableData : detailedTableData;
+  const tbody = document.querySelector(`#${tableType}-table tbody`);
+  
+  tbody.innerHTML = '';
+  
+  data.forEach(row => {
+    const tr = document.createElement('tr');
+    
+    if (tableType === 'averaged') {
+      tr.innerHTML = `
+        <td>${row.model}</td>
+        <td>${row.stCSHtml}</td>
+        <td>${row.stCIHtml}</td>
+        <td>${row.mtCSHtml}</td>
+        <td>${row.mtCIHtml}</td>
+      `;
+    } else {
+      tr.innerHTML = `
+        <td>${row.model}</td>
+        <td>${row.stCSHtml}</td>
+        <td>${row.stCIHtml}</td>
+        <td>${row.mtExpCSHtml}</td>
+        <td>${row.mtExpCIHtml}</td>
+        <td>${row.mtEditCSHtml}</td>
+        <td>${row.mtEditCIHtml}</td>
+        <td>${row.mtRefCSHtml}</td>
+        <td>${row.mtRefCIHtml}</td>
+      `;
+    }
+    
+    tbody.appendChild(tr);
+  });
+}
+
+function updateSortIndicators(tableType, activeColumn, direction) {
+  // Remove active class from all headers and parent headers
+  const headers = document.querySelectorAll(`#${tableType}-table .sortable`);
+  const parentHeaders = document.querySelectorAll(`#${tableType}-table th[colspan]`);
+  
+  headers.forEach((header, index) => {
+    header.classList.remove('active');
+    const arrow = header.querySelector('.sort-arrow');
+    if (arrow) {
+      arrow.classList.add('hidden');
+    }
+  });
+  
+  parentHeaders.forEach(parent => {
+    parent.classList.remove('parent-active');
+  });
+  
+  // Add active class to current column
+  const activeHeader = headers[activeColumn - 1]; // -1 because first column (model) is not sortable
+  if (activeHeader) {
+    activeHeader.classList.add('active');
+    const arrow = activeHeader.querySelector('.sort-arrow');
+    if (arrow) {
+      arrow.classList.remove('hidden');
+      arrow.textContent = direction === 'desc' ? '↓' : '↑';
+    }
+    
+    // Determine and highlight parent column header
+    let parentColumnIndex;
+    if (tableType === 'averaged') {
+      // Averaged table: columns 1-2 = Single-Turn, columns 3-4 = Multi-Turn
+      parentColumnIndex = activeColumn <= 2 ? 0 : 1; // Single-Turn or Multi-Turn
+    } else {
+      // Detailed table: columns 1-2 = Single-Turn, 3-4 = MT-Expansion, 5-6 = MT-Editing, 7-8 = MT-Refactor
+      if (activeColumn <= 2) parentColumnIndex = 0; // Single-Turn
+      else if (activeColumn <= 4) parentColumnIndex = 1; // MT-Expansion
+      else if (activeColumn <= 6) parentColumnIndex = 2; // MT-Editing
+      else parentColumnIndex = 3; // MT-Refactor
+    }
+    
+    const parentHeader = parentHeaders[parentColumnIndex];
+    if (parentHeader) {
+      parentHeader.classList.add('parent-active');
+    }
+  }
+}
+
+// Initialize sorting on page load
+document.addEventListener('DOMContentLoaded', function() {
+  extractTableData();
+  
+  // Set up initial sorting for averaged table (Multi-Turn C&S, descending)
+  currentSortColumn.averaged = { column: 3, direction: 'desc' };
+  sortTable('averaged', 3);
+  
+  // Prepare detailed table data but don't sort yet (will sort when shown)
+  currentSortColumn.detailed = { column: 1, direction: 'desc' };
+});
 </script>
 
 </body>
