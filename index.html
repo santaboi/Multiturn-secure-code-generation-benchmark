@@ -317,6 +317,12 @@
     background-color: #3396D3 !important;
     color: white !important;
   }
+
+  /* Remove extra margin from table containers to normalize spacing */
+  .table-container {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
 </style>
 
 </head>
@@ -453,10 +459,10 @@
                     <th colspan="2">Multi-Turn (MT)</th>
                   </tr>
                   <tr>
-                    <th class="sortable" onclick="sortTable('averaged', 1)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
-                    <th class="sortable" onclick="sortTable('averaged', 2)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
-                    <th class="sortable active" onclick="sortTable('averaged', 3)">C&amp;S <span class="sort-arrow">↓</span></th>
-                    <th class="sortable" onclick="sortTable('averaged', 4)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 1)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 2)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
+                    <th class="sortable active" onclick="sortTable('averaged', 3)">C&amp;S <span class="sort-arrow">↑</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 4)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -711,7 +717,6 @@
         </div>
         <!--Detailed Table (editing/refactoring/expansion)-->
         <div id="detailed-table" class="table-container">
-
           <table class="table is-bordered is-hoverable is-fullwidth is-size-4" style="font-size: 0.95em;">
             <thead>
               <tr>
@@ -722,14 +727,14 @@
                 <th colspan="2">MT-Refactor</th>
               </tr>
               <tr>
-                <th class="sortable" onclick="sortTable('detailed', 1)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 2)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 3)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 4)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 5)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 6)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 7)">C&amp;S <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 8)">C&amp;I <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 1)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 2)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 3)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 4)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 5)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 6)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 7)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 8)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
               </tr>
             </thead>
             <tbody>
@@ -1178,7 +1183,7 @@
         <figure>
           <img src="./resources/MT-SEC-built.png" style="width: 100%; height: auto;">
           <figcaption>
-            We transformed single-turn secure coding tasks into realistic 3-turn conversations that mimic how developers actually code. Using an LLM with guardrails, we generated multi-turn expansions, edits, and refactorings, then verified them with security experts. This preserves the original correctness and security tests while adding natural, iterative coding workflows.
+            We transformed single-turn secure coding tasks into realistic 3-turn conversations that mimic how developers actually code. Using an LLM with consitency guardrails, we generated multi-turn expansions, edits, and refactorings, then verified them with security experts. This preserves the original correctness and security tests while adding natural, iterative coding workflows.
           </figcaption>
         </figure>
       </div>
