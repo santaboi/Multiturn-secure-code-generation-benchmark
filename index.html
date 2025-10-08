@@ -407,44 +407,16 @@
       </div>
     </div>
   </div>
-
 </section>
-
-
-
 <section class="section">
   <div class="container">
-  
-    <!-- Abstract -->
-    <br /><br />
-    <h1 class="title is-3">
-      Can LLMs Generate Correct and Secure Code in <span style="color: #3396D3;">Multi-turn</span> Settings?
-    </h1>
-    <br />          
-    <div class="content has-text-justified">
-      <figure>
-        <img src="./resources/single-multi.png" style="width: 100%; border-radius: 10px;" alt="llm_and_webagent">
-        <figcaption>
-          <!-- A comparison of single-turn coding to multi-turn scenarios, with three different
-          interaction types. Our proposed dataset contains multi-turn conversations that are semantically
-          aligned with their single-turn counterparts, sharing the same requirements. The same unit tests are
-          applied to both to ensure a fair evaluation. -->
-          In real-world coding, developers often interact with LLMs in multi-turn settings. Can these AI coding systems generate correct and secure code in multi-turn settings?
-          As our best knowledge, our MT-Sec is the first benchmark to provide systematic comparison between single-turn and multi-turn settings with shared test cases in both correctness and security.
-          This help us understand in the exact same task, model can do fairly well in single-turn settings, but drop significantly in multi-turn settings.
-        </figcaption>
-      </figure>
-    </div>
-    <br /><br />
-    
     <div class="columns is-centered has-text-centered">
       <div class="column is-full">
-        <br /><br />
         <h3 class="title is-3">
           <span style="color: #3396D3;">MT-Sec</span> Leaderboard
         </h3>
         <div class="toggle-buttons">
-          <button id="averaged-btn" class="toggle-btn active" onclick="showAveragedTable()">Multi-turn averaged</button>
+          <button id="averaged-btn" class="toggle-btn active" onclick="showAveragedTable()">Multi-turn (averaged)</button>
           <button id="detailed-btn" class="toggle-btn" onclick="showDetailedTable()">Multi-turn(detailed)</button>
         </div>
         <div class="scrollable-table-section">
@@ -455,259 +427,186 @@
                 <thead>
                   <tr>
                     <th rowspan="2">Model</th>
-                    <th colspan="2">Single-Turn (ST)</th>
                     <th colspan="2">Multi-Turn (MT)</th>
                   </tr>
                   <tr>
-                    <th class="sortable" onclick="sortTable('averaged', 1)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
-                    <th class="sortable" onclick="sortTable('averaged', 2)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
-                    <th class="sortable active" onclick="sortTable('averaged', 3)">C&amp;S <span class="sort-arrow">↑</span></th>
-                    <th class="sortable" onclick="sortTable('averaged', 4)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
+                    <th class="sortable active" onclick="sortTable('averaged', 1)"><span style="font-size: 0.7em;">Correct&amp;Secure</span> <span class="sort-arrow">↑</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 2)"><span style="font-size: 0.7em;">Correct&amp;Insecure</span> <span class="sort-arrow hidden">↓</span></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> Aider + GPT-5<sup>T</sup></td>
-                    <td>53.0</td>
-                    <td>14.8</td>
                     <td>35.8</td>
                     <td>13.0</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> OpenHands + GPT-5<sup>T</sup></td>
-                    <td>52.5</td>
-                    <td>18.0</td>
                     <td>34.2</td>
                     <td>15.9</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude Opus 4<sup>T</sup></td>
-                    <td>51.9</td>
-                    <td>12.7</td>
-                    <td><b>40.1</b></td>
+                    <td>40.1</td>
                     <td>13.1</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup></td>
-                    <td>51.4</td>
-                    <td>10.9</td>
                     <td>39.7</td>
                     <td>12.2</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> Codex + GPT-5<sup>T</sup></td>
-                    <td>50.1</td>
-                    <td>15.1</td>
                     <td>36.2</td>
                     <td>15.0</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O4 Mini<sup>T</sup></td>
-                    <td>49.4</td>
-                    <td>10.4</td>
                     <td>38.3</td>
                     <td>11.1</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude Sonnet 4<sup>T</sup></td>
-                    <td>49.4</td>
-                    <td>12.8</td>
                     <td>38.8</td>
                     <td>13.4</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup></td>
-                    <td>48.4</td>
-                    <td>10.4</td>
                     <td>37.0</td>
                     <td>10.7</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup> Mini<sup>T</sup></td>
-                    <td>48.2</td>
-                    <td>10.5</td>
                     <td>39.2</td>
                     <td>12.0</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Pro<sup>T</sup></td>
-                    <td>48.1</td>
-                    <td>10.3</td>
                     <td>36.4</td>
                     <td>11.5</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup> Mini<sup>T</sup></td>
-                    <td>47.9</td>
-                    <td>11.2</td>
                     <td>38.3</td>
                     <td>11.5</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup></td>
-                    <td>47.4</td>
-                    <td>12.0</td>
                     <td>36.6</td>
                     <td>11.8</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet<sup>T</sup></td>
-                    <td>44.7</td>
-                    <td>11.1</td>
                     <td>38.0</td>
                     <td>12.9</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-R1<sup>T</sup></td>
-                    <td>44.4</td>
-                    <td>10.7</td>
                     <td>33.9</td>
                     <td>11.4</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4.1</td>
-                    <td>44.0</td>
-                    <td>9.6</td>
                     <td>35.7</td>
                     <td>10.9</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet</td>
-                    <td>43.3</td>
-                    <td>12.6</td>
                     <td>35.4</td>
                     <td>12.9</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4o</td>
-                    <td>42.7</td>
-                    <td>8.9</td>
                     <td>30.6</td>
                     <td>11.0</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup> Mini<sup>T</sup></td>
-                    <td>40.2</td>
-                    <td>9.4</td>
                     <td>34.7</td>
                     <td>10.1</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-V3</td>
-                    <td>39.8</td>
-                    <td>9.9</td>
                     <td>34.5</td>
                     <td>12.1</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.5 Sonnet</td>
-                    <td>38.7</td>
-                    <td>8.9</td>
                     <td>28.9</td>
                     <td>9.9</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>32B</sub></td>
-                    <td>36.2</td>
-                    <td>7.8</td>
                     <td>29.4</td>
                     <td>8.8</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>14B</sub></td>
-                    <td>27.5</td>
-                    <td>8.0</td>
                     <td>19.8</td>
                     <td>10.1</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>14B</sub></td>
-                    <td>27.2</td>
-                    <td>7.3</td>
                     <td>24.3</td>
                     <td>8.6</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Flash<sup>T</sup></td>
-                    <td>26.2</td>
-                    <td>6.2</td>
                     <td>23.1</td>
                     <td>8.2</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>8B</sub><sup>T</sup></td>
-                    <td>22.4</td>
-                    <td>9.6</td>
                     <td>19.6</td>
                     <td>9.5</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub><sup>T</sup></td>
-                    <td>19.4</td>
-                    <td>9.0</td>
                     <td>16.4</td>
                     <td>8.8</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>7B</sub></td>
-                    <td>19.3</td>
-                    <td>9.3</td>
                     <td>17.7</td>
                     <td>9.8</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub></td>
-                    <td>18.8</td>
-                    <td>9.2</td>
                     <td>16.1</td>
                     <td>9.6</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>8B</sub></td>
-                    <td>18.6</td>
-                    <td>9.5</td>
                     <td>18.1</td>
                     <td>9.8</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>3B</sub></td>
-                    <td>12.9</td>
-                    <td>10.8</td>
                     <td>11.4</td>
                     <td>9.9</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub><sup>T</sup></td>
-                    <td>11.6</td>
-                    <td>9.9</td>
                     <td>11.3</td>
                     <td>8.2</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub></td>
-                    <td>10.8</td>
-                    <td>10.1</td>
                     <td>9.4</td>
                     <td>8.5</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub><sup>T</sup></td>
-                    <td>6.8</td>
-                    <td>9.6</td>
                     <td>4.2</td>
                     <td>7.0</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub></td>
-                    <td>4.1</td>
-                    <td>11.3</td>
                     <td>3.6</td>
                     <td>7.4</td>
                   </tr>
                   <tr>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>0.5B</sub></td>
-                    <td>2.8</td>
-                    <td>7.5</td>
                     <td>3.9</td>
                     <td>6.3</td>
                   </tr>
@@ -766,7 +665,7 @@
                 <td>12.7</td>
                 <td>30.8</td>
                 <td>14.7</td>
-                <td><b>41.7</b></td>
+                <td>41.7</td>
                 <td>13.5</td>
                 <td>47.7</td>
                 <td>11.1</td>
@@ -812,7 +711,7 @@
                 <td>15.1</td>
                 <td>38.3</td>
                 <td>13.4</td>
-                <td><b>47.9</b></td>
+                <td>47.9</td>
                 <td>11.8</td>
               </tr>
               <tr>
@@ -830,7 +729,7 @@
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup> Mini<sup>T</sup></td>
                 <td>48.2</td>
                 <td>10.5</td>
-                <td><b>36.2</b></td>
+                <td>36.2</td>
                 <td>10.7</td>
                 <td>40.5</td>
                 <td>13.2</td>
@@ -854,7 +753,7 @@
                 <td>11.2</td>
                 <td>30.9</td>
                 <td>11.6</td>
-                <td><b>41.7</b></td>
+                <td>41.7</td>
                 <td>11.7</td>
                 <td>42.2</td>
                 <td>11.1</td>
@@ -895,7 +794,7 @@
               <tr>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4.1</td>
                 <td>44.0</td>
-                <td><b>9.6</b></td>
+                <td>9.6</td>
                 <td>29.0</td>
                 <td>12.6</td>
                 <td>39.3</td>
@@ -989,7 +888,7 @@
                 <td>24.3</td>
                 <td>9.5</td>
                 <td>26.2</td>
-                <td><b>7.5</b></td>
+                <td>7.5</td>
               </tr>
               <tr>
                 <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Flash<sup>T</sup></td>
@@ -1106,7 +1005,7 @@
                 <td>4.1</td>
                 <td>11.3</td>
                 <td>2.4</td>
-                <td><b>4.0</b></td>
+                <td>4.0</td>
                 <td>3.4</td>
                 <td>8.9</td>
                 <td>5.1</td>
@@ -1119,7 +1018,7 @@
                 <td>4.5</td>
                 <td>5.2</td>
                 <td>4.2</td>
-                <td><b>6.0</b></td>
+                <td>6.0</td>
                 <td>3.0</td>
                 <td>7.6</td>
               </tr>
@@ -1139,6 +1038,32 @@
 </section>
 
 
+<section class="section">
+  <div class="container">
+    <!-- Abstract -->
+    <br /><br />
+    <h1 class="title is-3">
+      Can LLMs Generate Correct and Secure Code in <span style="color: #3396D3;">Multi-turn</span> Settings?
+    </h1>
+    <br />          
+    <div class="content has-text-justified">
+      <figure>
+        <img src="./resources/single-multi.png" style="width: 100%; border-radius: 10px;" alt="llm_and_webagent">
+        <figcaption>
+          <!-- A comparison of single-turn coding to multi-turn scenarios, with three different
+          interaction types. Our proposed dataset contains multi-turn conversations that are semantically
+          aligned with their single-turn counterparts, sharing the same requirements. The same unit tests are
+          applied to both to ensure a fair evaluation. -->
+          In real-world coding, developers often interact with LLMs in multi-turn settings. Can these AI coding systems generate correct and secure code in multi-turn settings?
+          As our best knowledge, our MT-Sec is the first benchmark to provide systematic comparison between single-turn and multi-turn settings with shared test cases in both correctness and security.
+          This help us understand in the exact same task, model can do fairly well in single-turn settings, but drop significantly in multi-turn settings.
+        </figcaption>
+      </figure>
+    </div>
+    <br /><br />
+  </div>
+</section>
+
 <div class="notification is-info is-light">
   <div class="container">
     <div class="content has-text-left" style="font-size: 1.1em; line-height: 1.8;">
@@ -1152,11 +1077,11 @@
         </p>
 
         <p style="margin-bottom: 1rem;">
-          🏗️ Built on top of <strong>SECCODEPLT</strong> and <strong>BAXBENCH</strong> benchmarks
+          Built on top of <strong>SECCODEPLT</strong> and <strong>BAXBENCH</strong> benchmarks
         </p>
 
         <p style="margin-bottom: 1rem;">
-          🔄 <strong>Captures three common multi-turn coding interaction types:</strong>
+          <strong>Captures three common multi-turn coding interaction types:</strong>
         </p>
         <ul style="margin-left: 2rem; margin-bottom: 1rem;">
           <li style="margin-bottom: 0.5rem;"><strong>Expansion</strong> – gradually adding features and functionality</li>
@@ -1165,7 +1090,7 @@
         </ul>
 
         <p style="margin-bottom: 0;">
-          🤖 Comprehensive evaluation of <strong>32 state-of-the-art LLMs</strong> and <strong>3 coding agents</strong> (Aider, Codex, OpenHands)
+          Comprehensive evaluation of <strong>32 state-of-the-art LLMs</strong> and <strong>3 coding agents</strong> (Aider, Codex, OpenHands)
         </p>
       </div>
     </div>
@@ -1223,8 +1148,8 @@ function showAveragedTable() {
   
   // Apply default sorting for averaged table (Multi-Turn C&S)
   if (averagedTableData.length > 0) {
-    currentSortColumn.averaged = { column: 3, direction: 'desc' };
-    sortTable('averaged', 3);
+    currentSortColumn.averaged = { column: 1, direction: 'desc' };
+    sortTable('averaged', 1);
   }
 }
 
@@ -1258,14 +1183,10 @@ function extractTableData() {
     if (cells.length > 0) {
       averagedTableData.push({
         model: cells[0].innerHTML,
-        stCS: parseFloat(cells[1].textContent),
-        stCSHtml: cells[1].innerHTML,
-        stCI: parseFloat(cells[2].textContent),
-        stCIHtml: cells[2].innerHTML,
-        mtCS: parseFloat(cells[3].textContent),
-        mtCSHtml: cells[3].innerHTML,
-        mtCI: parseFloat(cells[4].textContent),
-        mtCIHtml: cells[4].innerHTML
+        mtCS: parseFloat(cells[1].textContent),
+        mtCSHtml: cells[1].innerHTML,
+        mtCI: parseFloat(cells[2].textContent),
+        mtCIHtml: cells[2].innerHTML
       });
     }
   });
@@ -1306,7 +1227,7 @@ function sortTable(tableType, columnIndex) {
   
   // Column mapping
   const columnKeys = tableType === 'averaged' 
-    ? ['model', 'stCS', 'stCI', 'mtCS', 'mtCI']
+    ? ['model', 'mtCS', 'mtCI']
     : ['model', 'stCS', 'stCI', 'mtExpCS', 'mtExpCI', 'mtEditCS', 'mtEditCI', 'mtRefCS', 'mtRefCI'];
   
   const sortKey = columnKeys[columnIndex];
@@ -1347,8 +1268,6 @@ function rebuildTable(tableType) {
     if (tableType === 'averaged') {
       tr.innerHTML = `
         <td>${row.model}</td>
-        <td>${row.stCSHtml}</td>
-        <td>${row.stCIHtml}</td>
         <td>${row.mtCSHtml}</td>
         <td>${row.mtCIHtml}</td>
       `;
@@ -1400,8 +1319,8 @@ function updateSortIndicators(tableType, activeColumn, direction) {
     // Determine and highlight parent column header
     let parentColumnIndex;
     if (tableType === 'averaged') {
-      // Averaged table: columns 1-2 = Single-Turn, columns 3-4 = Multi-Turn
-      parentColumnIndex = activeColumn <= 2 ? 0 : 1; // Single-Turn or Multi-Turn
+      // Averaged table: columns 1-2 = Multi-Turn only
+      parentColumnIndex = 0; // Multi-Turn
     } else {
       // Detailed table: columns 1-2 = Single-Turn, 3-4 = MT-Expansion, 5-6 = MT-Editing, 7-8 = MT-Refactor
       if (activeColumn <= 2) parentColumnIndex = 0; // Single-Turn
@@ -1422,8 +1341,8 @@ document.addEventListener('DOMContentLoaded', function() {
   extractTableData();
   
   // Set up initial sorting for averaged table (Multi-Turn C&S, descending)
-  currentSortColumn.averaged = { column: 3, direction: 'desc' };
-  sortTable('averaged', 3);
+  currentSortColumn.averaged = { column: 1, direction: 'desc' };
+  sortTable('averaged', 1);
   
   // Prepare detailed table data but don't sort yet (will sort when shown)
   currentSortColumn.detailed = { column: 1, direction: 'desc' };
