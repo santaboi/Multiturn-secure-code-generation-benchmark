@@ -323,6 +323,244 @@
     margin-top: 0 !important;
     margin-bottom: 0 !important;
   }
+
+  /* Mobile responsiveness */
+  @media (max-width: 768px) {
+    /* Navigation buttons */
+    .navigation-buttons {
+      flex-direction: column;
+      gap: 15px;
+      padding: 0 20px;
+    }
+    
+    .nav-button {
+      height: 150px;
+      font-size: 14px;
+      margin: 0;
+      padding: 15px;
+    }
+    
+    .button-text {
+      font-size: 14px;
+      padding: 8px 12px;
+    }
+
+    /* Header and title */
+    .hero-body {
+      padding: 2rem 1rem;
+    }
+    
+    .title.is-1 {
+      font-size: 1.8rem !important;
+      line-height: 1.2;
+      margin-top: 1rem;
+    }
+    
+    .responsive-logo {
+      height: 60px !important;
+      margin-right: 15px;
+    }
+    
+    .hero-body .container > .columns > .column > div {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    /* Authors */
+    .publication-authors {
+      font-size: 0.9rem !important;
+      line-height: 1.4;
+    }
+    
+    .publication-authors a {
+      display: inline-block;
+      margin: 2px;
+    }
+
+    /* Publication links */
+    .publication-links {
+      margin-top: 1.5rem;
+    }
+    
+    .publication-links .link-block {
+      margin: 5px;
+    }
+    
+    .button.is-normal {
+      font-size: 0.9rem;
+      padding: 0.5rem 1rem;
+    }
+
+    /* Sections */
+    .section {
+      padding: 2rem 1rem;
+    }
+    
+    .title.is-3 {
+      font-size: 1.5rem !important;
+    }
+    
+    /* Toggle buttons */
+    .toggle-buttons {
+      flex-direction: row;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    .toggle-btn {
+      font-size: 13px;
+      padding: 6px 12px;
+      min-width: 140px;
+      flex: 1;
+      max-width: 180px;
+    }
+
+    /* Tables */
+    .scrollable-table-section {
+      padding: 15px 5px;
+      margin: 15px 0;
+      overflow-x: auto;
+      border-radius: 8px;
+    }
+    
+    .table {
+      font-size: 0.85em !important;
+      min-width: 500px;
+      margin-bottom: 0;
+    }
+    
+    .table th,
+    .table td {
+      padding: 0.75rem 0.5rem;
+      font-size: 1em;
+      white-space: nowrap;
+    }
+    
+    .table th {
+      font-size: 0.9em;
+      font-weight: 600;
+    }
+    
+    .table img {
+      width: 18px !important;
+      height: 18px !important;
+      margin-right: 4px;
+    }
+    
+    /* Model names should wrap if needed */
+    .table td:first-child {
+      white-space: normal;
+      min-width: 140px;
+      font-size: 0.9em;
+    }
+
+    /* Content sections */
+    .content {
+      font-size: 0.85rem;
+    }
+    
+    .notification {
+      margin: 1rem 0;
+      padding: 1.25rem 1rem;
+    }
+    
+    .notification .content {
+      font-size: 0.8rem;
+      line-height: 1.5;
+    }
+    
+    /* Specific content adjustments for mobile */
+    .notification .content p {
+      margin-bottom: 0.8rem;
+    }
+    
+    .notification .content ul {
+      margin-left: 1.5rem;
+    }
+    
+    .notification .content li {
+      margin-bottom: 0.3rem;
+    }
+    
+    /* Figure captions and other content text */
+    figure figcaption {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+    
+    /* Footer */
+    .footer {
+      padding: 2rem 1rem;
+    }
+
+    /* BibTeX section */
+    pre {
+      font-size: 0.8rem;
+      overflow-x: auto;
+    }
+
+    /* Video carousel navigation */
+    .nav-button.left {
+      left: -15px;
+    }
+    
+    .nav-button.right {
+      right: -15px;
+    }
+    
+    .nav-button {
+      width: 30px;
+      height: 30px;
+      font-size: 18px;
+      padding: 5px;
+    }
+  }
+
+  /* Extra small devices */
+  @media (max-width: 480px) {
+    .title.is-1 {
+      font-size: 1.4rem !important;
+    }
+    
+    .responsive-logo {
+      height: 50px !important;
+      margin-right: 10px;
+    }
+    
+    .toggle-btn {
+      font-size: 11px;
+      padding: 5px 10px;
+      min-width: 120px;
+      flex: 1;
+      max-width: 160px;
+    }
+    
+    .table {
+      font-size: 0.8em !important;
+      min-width: 450px;
+    }
+    
+    .table th,
+    .table td {
+      padding: 0.6rem 0.4rem;
+    }
+    
+    .table td:first-child {
+      min-width: 120px;
+      font-size: 0.85em;
+    }
+    
+    .button.is-normal {
+      font-size: 0.8rem;
+      padding: 0.4rem 0.8rem;
+    }
+    
+    .scrollable-table-section {
+      padding: 10px 3px;
+      margin: 10px 0;
+    }
+  }
 </style>
 
 </head>
@@ -357,16 +595,7 @@
 
           <!-- PDF Link. -->
           <span class="link-block">
-            <a href="resources/MT-Sec0523.pdf"
-                class="external-link button is-normal is-rounded is-dark">
-              <span class="icon">
-                  <i class="fas fa-file-pdf"></i>
-              </span>
-              <span>Paper</span>
-            </a>
-          </span>
-          <span class="link-block">
-            <a href="TODO"
+            <a href="https://www.arxiv.org/abs/2510.13859"
                 class="external-link button is-normal is-rounded is-dark">
               <span class="icon">
                   <i class="ai ai-arxiv"></i>
@@ -384,7 +613,7 @@
             </a>
           </span>
           <span class="link-block">
-            <a href="https://github.com/JARVVVIS/mt-sec-code"
+            <a href="https://github.com/JARVVVIS/mt-sec"
                 class="external-link button is-normal is-rounded is-dark">
               <span class="icon">
                 <img src="./resources/github-mark.png" alt="GitHub Logo" style="width: 20px; height: 20px;">
