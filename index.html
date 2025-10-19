@@ -309,7 +309,7 @@
   }
 
   .sort-arrow.hidden {
-    opacity: 0;
+    opacity: 0.3;
   }
 
   /* Parent column header highlighting */
@@ -659,8 +659,8 @@
                     <th colspan="2">Multi-Turn (MT)</th>
                   </tr>
                   <tr>
-                    <th class="sortable active" onclick="sortTable('averaged', 1)"><span style="font-size: 0.7em;">Correct&amp;Secure</span> <span class="sort-arrow">↑</span></th>
-                    <th class="sortable" onclick="sortTable('averaged', 2)"><span style="font-size: 0.7em;">Correct&amp;Insecure</span> <span class="sort-arrow hidden">↓</span></th>
+                    <th class="sortable active" onclick="sortTable('averaged', 1)"><span style="font-size: 0.7em;">Correct&amp;Secure</span><br><span style="font-size: 0.6em; color: #134686;">(higher better)</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 2)"><span style="font-size: 0.7em;">Correct&amp;Insecure</span><br><span style="font-size: 0.6em; color: #134686;">(lower better)</span></th>
                   </tr>
                 </thead>
                 <tbody>
@@ -855,14 +855,14 @@
                 <th colspan="2">MT-Refactor</th>
               </tr>
               <tr>
-                <th class="sortable" onclick="sortTable('detailed', 1)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 2)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 3)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 4)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 5)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 6)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 7)">C&amp;S <span class="sort-arrow hidden">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 8)">C&amp;I <span class="sort-arrow hidden">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 1)">C&amp;S <span class="sort-arrow">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 2)">C&amp;I <span class="sort-arrow">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 3)">C&amp;S <span class="sort-arrow">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 4)">C&amp;I <span class="sort-arrow">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 5)">C&amp;S <span class="sort-arrow">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 6)">C&amp;I <span class="sort-arrow">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 7)">C&amp;S <span class="sort-arrow">↓</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 8)">C&amp;I <span class="sort-arrow">↑</span></th>
               </tr>
             </thead>
             <tbody>
