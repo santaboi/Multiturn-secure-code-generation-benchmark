@@ -227,10 +227,10 @@
   .scrollable-table-section {
     max-height: 600px;
     overflow-y: auto;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
-    padding: 20px;
-    margin: 20px 0;
+    border: none;
+    border-radius: 0;
+    padding: 0;
+    margin: 0;
     width: 100%;
     box-sizing: border-box;
   }
@@ -418,10 +418,10 @@
 
     /* Tables */
     .scrollable-table-section {
-      padding: 15px 5px;
-      margin: 15px 0;
+      padding: 0;
+      margin: 0;
       overflow-x: auto;
-      border-radius: 8px;
+      border-radius: 0;
     }
     
     .table {
@@ -557,9 +557,66 @@
     }
     
     .scrollable-table-section {
-      padding: 10px 3px;
-      margin: 10px 0;
+      padding: 0;
+      margin: 0;
     }
+  }
+
+  /* Remove all table borders */
+  .table,
+  .table th,
+  .table td {
+    border: none !important;
+  }
+
+  /* Center align all table content */
+  .table th,
+  .table td {
+    text-align: center !important;
+  }
+
+  /* Reduce line spacing in table headers */
+  .table th {
+    line-height: 1.1 !important;
+  }
+
+  /* Ensure consistent header sizing and prevent wrapping */
+  .table th .sort-arrow {
+    font-size: 0.8em;
+    margin-left: 3px;
+  }
+  
+  .table th span {
+    white-space: nowrap;
+  }
+
+  /* Hero section light gray/blue background */
+  .hero {
+    background: #e6f3ff;
+  }
+
+  /* Make author links blue in hero section with light background */
+  .hero .publication-authors a {
+    color: #3396D3 !important;
+  }
+
+  .hero .publication-authors a:hover {
+    color: #2980b9 !important;
+    text-decoration: underline;
+  }
+
+  /* Reduce hero section bottom spacing */
+  .hero .hero-body {
+    padding-bottom: 0.5rem !important;
+  }
+
+  /* Alternating row colors */
+  .table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .table tbody tr:nth-child(odd) {
+    background-color: white;
   }
 </style>
 
@@ -574,7 +631,7 @@
         
         <div class="column has-text-centered">
           <div style="display: flex; align-items: center; justify-content: center;">
-            <img src="./resources/temp-logo.png" alt="Logo" class="responsive-logo">
+            <img src="./resources/logo1204.png" alt="Logo" class="responsive-logo">
             <h1 class="title is-1 publication-title" style="margin: 0;">Benchmarking Correctness and Security in Multi-Turn Code Generation</h1>
           </div>
           <div class="is-size-5 publication-authors">
@@ -652,189 +709,225 @@
           <div class="content has-text-justified">
             <!--Averaged Table (only averaged mutli-turn)-->
             <div id="averaged-table" class="table-container">
-              <table class="table is-bordered is-hoverable is-fullwidth is-size-4" style="font-size: 0.95em;">
+              <table class="table is-hoverable is-fullwidth is-size-4" style="font-size: 0.95em;">
                 <thead>
                   <tr>
+                    <th rowspan="2">Rank</th>
                     <th rowspan="2">Model</th>
                     <th colspan="2">Multi-Turn (MT)</th>
                   </tr>
                   <tr>
-                    <th class="sortable active" onclick="sortTable('averaged', 1)"><span style="font-size: 0.7em;">Correct&amp;Secure</span><br><span style="font-size: 0.6em; color: #134686;">(higher better)</span></th>
-                    <th class="sortable" onclick="sortTable('averaged', 2)"><span style="font-size: 0.7em;">Correct&amp;Insecure</span><br><span style="font-size: 0.6em; color: #134686;">(lower better)</span></th>
+                    <th class="sortable active" onclick="sortTable('averaged', 2)"><span style="font-size: 0.7em;">Correct&amp;Secure (%)</span><br><span style="font-size: 0.6em; color: #134686; line-height: 0.8;">(higher better)</span></th>
+                    <th class="sortable" onclick="sortTable('averaged', 3)"><span style="font-size: 0.7em;">Correct&amp;Insecure (%)</span><br><span style="font-size: 0.6em; color: #134686; line-height: 0.8;">(lower better)</span></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> Aider + GPT-5<sup>T</sup></td>
+                    <td>1</td>
+                    <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup><strong>(Aider)</strong></td>
                     <td>35.8</td>
                     <td>13.0</td>
                   </tr>
                   <tr>
-                    <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> OpenHands + GPT-5<sup>T</sup></td>
+                    <td>2</td>
+                    <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;">GPT-5<sup>T</sup><strong>(OpenHands)</strong></td>
                     <td>34.2</td>
                     <td>15.9</td>
                   </tr>
                   <tr>
+                    <td>3</td>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude Opus 4<sup>T</sup></td>
                     <td>40.1</td>
                     <td>13.1</td>
                   </tr>
                   <tr>
+                    <td>4</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup></td>
                     <td>39.7</td>
                     <td>12.2</td>
                   </tr>
                   <tr>
-                    <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> Codex + GPT-5<sup>T</sup></td>
+                    <td>5</td>
+                    <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;">GPT-5<sup>T</sup><strong>(Codex)</strong></td>
                     <td>36.2</td>
                     <td>15.0</td>
                   </tr>
                   <tr>
+                    <td>6</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O4 Mini<sup>T</sup></td>
                     <td>38.3</td>
                     <td>11.1</td>
                   </tr>
                   <tr>
+                    <td>7</td>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude Sonnet 4<sup>T</sup></td>
                     <td>38.8</td>
                     <td>13.4</td>
                   </tr>
                   <tr>
+                    <td>8</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup></td>
                     <td>37.0</td>
                     <td>10.7</td>
                   </tr>
                   <tr>
+                    <td>9</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup> Mini<sup>T</sup></td>
                     <td>39.2</td>
                     <td>12.0</td>
                   </tr>
                   <tr>
+                    <td>10</td>
                     <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Pro<sup>T</sup></td>
                     <td>36.4</td>
                     <td>11.5</td>
                   </tr>
                   <tr>
+                    <td>11</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup> Mini<sup>T</sup></td>
                     <td>38.3</td>
                     <td>11.5</td>
                   </tr>
                   <tr>
+                    <td>12</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup></td>
                     <td>36.6</td>
                     <td>11.8</td>
                   </tr>
                   <tr>
+                    <td>13</td>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet<sup>T</sup></td>
                     <td>38.0</td>
                     <td>12.9</td>
                   </tr>
                   <tr>
+                    <td>14</td>
                     <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-R1<sup>T</sup></td>
                     <td>33.9</td>
                     <td>11.4</td>
                   </tr>
                   <tr>
+                    <td>15</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4.1</td>
                     <td>35.7</td>
                     <td>10.9</td>
                   </tr>
                   <tr>
+                    <td>16</td>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet</td>
                     <td>35.4</td>
                     <td>12.9</td>
                   </tr>
                   <tr>
+                    <td>17</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4o</td>
                     <td>30.6</td>
                     <td>11.0</td>
                   </tr>
                   <tr>
+                    <td>18</td>
                     <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup> Mini<sup>T</sup></td>
                     <td>34.7</td>
                     <td>10.1</td>
                   </tr>
                   <tr>
+                    <td>19</td>
                     <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-V3</td>
                     <td>34.5</td>
                     <td>12.1</td>
                   </tr>
                   <tr>
+                    <td>20</td>
                     <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.5 Sonnet</td>
                     <td>28.9</td>
                     <td>9.9</td>
                   </tr>
                   <tr>
+                    <td>21</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>32B</sub></td>
                     <td>29.4</td>
                     <td>8.8</td>
                   </tr>
                   <tr>
+                    <td>22</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>14B</sub></td>
                     <td>19.8</td>
                     <td>10.1</td>
                   </tr>
                   <tr>
+                    <td>23</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>14B</sub></td>
                     <td>24.3</td>
                     <td>8.6</td>
                   </tr>
                   <tr>
+                    <td>24</td>
                     <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Flash<sup>T</sup></td>
                     <td>23.1</td>
                     <td>8.2</td>
                   </tr>
                   <tr>
+                    <td>25</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>8B</sub><sup>T</sup></td>
                     <td>19.6</td>
                     <td>9.5</td>
                   </tr>
                   <tr>
+                    <td>26</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub><sup>T</sup></td>
                     <td>16.4</td>
                     <td>8.8</td>
                   </tr>
                   <tr>
+                    <td>27</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>7B</sub></td>
                     <td>17.7</td>
                     <td>9.8</td>
                   </tr>
                   <tr>
+                    <td>28</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub></td>
                     <td>16.1</td>
                     <td>9.6</td>
                   </tr>
                   <tr>
+                    <td>29</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>8B</sub></td>
                     <td>18.1</td>
                     <td>9.8</td>
                   </tr>
                   <tr>
+                    <td>30</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>3B</sub></td>
                     <td>11.4</td>
                     <td>9.9</td>
                   </tr>
                   <tr>
+                    <td>31</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub><sup>T</sup></td>
                     <td>11.3</td>
                     <td>8.2</td>
                   </tr>
                   <tr>
+                    <td>32</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub></td>
                     <td>9.4</td>
                     <td>8.5</td>
                   </tr>
                   <tr>
+                    <td>33</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub><sup>T</sup></td>
                     <td>4.2</td>
                     <td>7.0</td>
                   </tr>
                   <tr>
+                    <td>34</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub></td>
                     <td>3.6</td>
                     <td>7.4</td>
                   </tr>
                   <tr>
+                    <td>35</td>
                     <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>0.5B</sub></td>
                     <td>3.9</td>
                     <td>6.3</td>
@@ -845,9 +938,10 @@
         </div>
         <!--Detailed Table (editing/refactoring/expansion)-->
         <div id="detailed-table" class="table-container">
-          <table class="table is-bordered is-hoverable is-fullwidth is-size-4" style="font-size: 0.95em;">
+          <table class="table is-hoverable is-fullwidth is-size-4" style="font-size: 0.95em;">
             <thead>
               <tr>
+                <th rowspan="2">Rank</th>
                 <th rowspan="2">Model</th>
                 <th colspan="2">Single-Turn</th>
                 <th colspan="2">MT-Expansion</th>
@@ -855,18 +949,19 @@
                 <th colspan="2">MT-Refactor</th>
               </tr>
               <tr>
-                <th class="sortable" onclick="sortTable('detailed', 1)">C&amp;S <span class="sort-arrow">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 2)">C&amp;I <span class="sort-arrow">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 3)">C&amp;S <span class="sort-arrow">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 4)">C&amp;I <span class="sort-arrow">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 5)">C&amp;S <span class="sort-arrow">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 6)">C&amp;I <span class="sort-arrow">↑</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 7)">C&amp;S <span class="sort-arrow">↓</span></th>
-                <th class="sortable" onclick="sortTable('detailed', 8)">C&amp;I <span class="sort-arrow">↑</span></th>
+                <th class="sortable" onclick="sortTable('detailed', 2)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;S (%) <span class="sort-arrow">↓</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 3)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;I (%) <span class="sort-arrow">↑</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 4)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;S (%) <span class="sort-arrow">↓</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 5)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;I (%) <span class="sort-arrow">↑</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 6)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;S (%) <span class="sort-arrow">↓</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 7)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;I (%) <span class="sort-arrow">↑</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 8)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;S (%) <span class="sort-arrow">↓</span></span></th>
+                <th class="sortable" onclick="sortTable('detailed', 9)"><span style="font-size: 0.7em; white-space: nowrap;">C&amp;I (%) <span class="sort-arrow">↑</span></span></th>
               </tr>
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup><strong>(Aider)</strong></td>
                 <td>53.0</td>
                 <td>14.8</td>
@@ -878,6 +973,7 @@
                 <td>10.4</td>
               </tr>
               <tr>
+                <td>2</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup><strong>(OpenHands)</strong></td>
                 <td>52.5</td>
                 <td>18.0</td>
@@ -889,6 +985,7 @@
                 <td>14.0</td>
               </tr>
               <tr>
+                <td>3</td>
                 <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude Opus 4<sup>T</sup></td>
                 <td>51.9</td>
                 <td>12.7</td>
@@ -900,6 +997,7 @@
                 <td>11.1</td>
               </tr>
               <tr>
+                <td>4</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup></td>
                 <td>51.4</td>
                 <td>10.9</td>
@@ -911,6 +1009,7 @@
                 <td>10.5</td>
               </tr>
               <tr>
+                <td>5</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;">GPT-5<sup>T</sup><strong>(Codex)</strong></td>
                 <td>50.1</td>
                 <td>15.1</td>
@@ -922,6 +1021,7 @@
                 <td>14.8</td>
               </tr>
               <tr>
+                <td>6</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O4 Mini<sup>T</sup></td>
                 <td>49.4</td>
                 <td>10.4</td>
@@ -933,6 +1033,7 @@
                 <td>10.9</td>
               </tr>
               <tr>
+                <td>7</td>
                 <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude Sonnet 4<sup>T</sup></td>
                 <td>49.4</td>
                 <td>12.8</td>
@@ -944,6 +1045,7 @@
                 <td>11.8</td>
               </tr>
               <tr>
+                <td>8</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup></td>
                 <td>48.4</td>
                 <td>10.4</td>
@@ -955,6 +1057,7 @@
                 <td>10.2</td>
               </tr>
               <tr>
+                <td>9</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-5<sup>T</sup> Mini<sup>T</sup></td>
                 <td>48.2</td>
                 <td>10.5</td>
@@ -966,6 +1069,7 @@
                 <td>12.1</td>
               </tr>
               <tr>
+                <td>10</td>
                 <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Pro<sup>T</sup></td>
                 <td>48.1</td>
                 <td>10.3</td>
@@ -977,6 +1081,7 @@
                 <td>10.6</td>
               </tr>
               <tr>
+                <td>11</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O3<sup>T</sup> Mini<sup>T</sup></td>
                 <td>47.9</td>
                 <td>11.2</td>
@@ -988,6 +1093,7 @@
                 <td>11.1</td>
               </tr>
               <tr>
+                <td>12</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup></td>
                 <td>47.4</td>
                 <td>12.0</td>
@@ -999,6 +1105,7 @@
                 <td>11.0</td>
               </tr>
               <tr>
+                <td>13</td>
                 <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet<sup>T</sup></td>
                 <td>44.7</td>
                 <td>11.1</td>
@@ -1010,6 +1117,7 @@
                 <td>11.6</td>
               </tr>
               <tr>
+                <td>14</td>
                 <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-R1<sup>T</sup></td>
                 <td>44.4</td>
                 <td>10.7</td>
@@ -1021,6 +1129,7 @@
                 <td>9.9</td>
               </tr>
               <tr>
+                <td>15</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4.1</td>
                 <td>44.0</td>
                 <td>9.6</td>
@@ -1032,6 +1141,7 @@
                 <td>9.9</td>
               </tr>
               <tr>
+                <td>16</td>
                 <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.7 Sonnet</td>
                 <td>43.3</td>
                 <td>12.6</td>
@@ -1043,6 +1153,7 @@
                 <td>11.7</td>
               </tr>
               <tr>
+                <td>17</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> GPT-4o</td>
                 <td>42.7</td>
                 <td>8.9</td>
@@ -1054,6 +1165,7 @@
                 <td>9.9</td>
               </tr>
               <tr>
+                <td>18</td>
                 <td><img src="./resources/models/openai.png" style="width: 20px; height: 20px;"> O1<sup>T</sup> Mini<sup>T</sup></td>
                 <td>40.2</td>
                 <td>9.4</td>
@@ -1065,6 +1177,7 @@
                 <td>9.8</td>
               </tr>
               <tr>
+                <td>19</td>
                 <td><img src="./resources/models/deepseek.png" style="width: 20px; height: 20px;"> DeepSeek-V3</td>
                 <td>39.8</td>
                 <td>9.9</td>
@@ -1076,6 +1189,7 @@
                 <td>10.0</td>
               </tr>
               <tr>
+                <td>20</td>
                 <td><img src="./resources/models/claude.png" style="width: 20px; height: 20px;"> Claude 3.5 Sonnet</td>
                 <td>38.7</td>
                 <td>8.9</td>
@@ -1087,6 +1201,7 @@
                 <td>9.0</td>
               </tr>
               <tr>
+                <td>21</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>32B</sub></td>
                 <td>36.2</td>
                 <td>7.8</td>
@@ -1098,6 +1213,7 @@
                 <td>7.6</td>
               </tr>
               <tr>
+                <td>22</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>14B</sub></td>
                 <td>27.5</td>
                 <td>8.0</td>
@@ -1109,6 +1225,7 @@
                 <td>8.1</td>
               </tr>
               <tr>
+                <td>23</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>14B</sub></td>
                 <td>27.2</td>
                 <td>7.3</td>
@@ -1120,6 +1237,7 @@
                 <td>7.5</td>
               </tr>
               <tr>
+                <td>24</td>
                 <td><img src="./resources/models/gemini.png" style="width: 20px; height: 20px;"> Gemini 2.5 Flash<sup>T</sup></td>
                 <td>26.2</td>
                 <td>6.2</td>
@@ -1131,6 +1249,7 @@
                 <td>8.0</td>
               </tr>
               <tr>
+                <td>25</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>8B</sub><sup>T</sup></td>
                 <td>22.4</td>
                 <td>9.6</td>
@@ -1142,6 +1261,7 @@
                 <td>8.9</td>
               </tr>
               <tr>
+                <td>26</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub><sup>T</sup></td>
                 <td>19.4</td>
                 <td>9.0</td>
@@ -1153,6 +1273,7 @@
                 <td>8.5</td>
               </tr>
               <tr>
+                <td>27</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>7B</sub></td>
                 <td>19.3</td>
                 <td>9.3</td>
@@ -1164,6 +1285,7 @@
                 <td>10.3</td>
               </tr>
               <tr>
+                <td>28</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>4B</sub></td>
                 <td>18.8</td>
                 <td>9.2</td>
@@ -1175,6 +1297,7 @@
                 <td>9.5</td>
               </tr>
               <tr>
+                <td>29</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>8B</sub></td>
                 <td>18.6</td>
                 <td>9.5</td>
@@ -1186,6 +1309,7 @@
                 <td>8.7</td>
               </tr>
               <tr>
+                <td>30</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>3B</sub></td>
                 <td>12.9</td>
                 <td>10.8</td>
@@ -1197,6 +1321,7 @@
                 <td>10.6</td>
               </tr>
               <tr>
+                <td>31</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub><sup>T</sup></td>
                 <td>11.6</td>
                 <td>9.9</td>
@@ -1208,6 +1333,7 @@
                 <td>8.7</td>
               </tr>
               <tr>
+                <td>32</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>1.7B</sub></td>
                 <td>10.8</td>
                 <td>10.1</td>
@@ -1219,6 +1345,7 @@
                 <td>9.8</td>
               </tr>
               <tr>
+                <td>33</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub><sup>T</sup></td>
                 <td>6.8</td>
                 <td>9.6</td>
@@ -1230,6 +1357,7 @@
                 <td>8.2</td>
               </tr>
               <tr>
+                <td>34</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-3<sub>0.6B</sub></td>
                 <td>4.1</td>
                 <td>11.3</td>
@@ -1241,6 +1369,7 @@
                 <td>9.2</td>
               </tr>
               <tr>
+                <td>35</td>
                 <td><img src="./resources/models/qwen.png" style="width: 20px; height: 20px;"> Qwen-2.5 Coder<sub>0.5B</sub></td>
                 <td>2.8</td>
                 <td>7.5</td>
@@ -1255,12 +1384,15 @@
           </table>
         </div>
       </div>
+      
       <p style="font-size: 0.9em; text-align: left;">
-        "T denotes thinking"
+        1. "T denotes thinking"
         <br>
-        "C&S: Correctness & Seccure/ C&I: Correct & Insecure"
+        2. "C&S: Correctness & Seccure/ C&I: Correct & Insecure"
         <br>
-        “All models show sharp declines in correctness & security when moving from single-turn to multi-turn coding — even top models drop by 20–27%.”
+        3.“All models show sharp declines in correctness & security when moving from single-turn to multi-turn coding, <strong>even top models drop by 20-27%.</strong>”
+        <br>
+        4. "Evaluation with Agentic scaffolds are highlithed in <strong>(Aider, Codex, OpenHands)</strong>"
         <br>
       </p>
     </div>
@@ -1295,31 +1427,31 @@
 
 <div class="notification is-info is-light">
   <div class="container">
-    <div class="content has-text-left" style="font-size: 1.1em; line-height: 1.8;">
+    <div class="content has-text-left" style="font-size: 1.1em; line-height: 1;">
       <h2 class="title is-3 has-text-centered" style="margin-bottom: 1.5rem; color: #363636;">
         <span style="color: #3396D3;">MT-Sec</span> at a Glance
       </h2>
       
       <div style="color: #363636;">
         <p style="margin-bottom: 1rem;">
-          📊 <strong>2,376 multi-turn coding tasks</strong> across <strong>6 programming languages</strong>, covering <strong>27 critical security vulnerabilities (CWEs)</strong>
+          ‣ <strong>2,376 multi-turn coding tasks</strong> across <strong>6 programming languages</strong>, covering <strong>27 critical security vulnerabilities (CWEs)</strong>
         </p>
 
         <p style="margin-bottom: 1rem;">
-          Built on top of <strong>SECCODEPLT</strong> and <strong>BAXBENCH</strong> benchmarks
+          ‣ Built on top of <strong>SECCODEPLT</strong> and <strong>BAXBENCH</strong> benchmarks
         </p>
 
         <p style="margin-bottom: 1rem;">
-          <strong>Captures three common multi-turn coding interaction types:</strong>
+          ‣ <strong>Captures three common multi-turn coding interaction types:</strong>
         </p>
         <ul style="margin-left: 2rem; margin-bottom: 1rem;">
-          <li style="margin-bottom: 0.5rem;"><strong>Expansion</strong> – gradually adding features and functionality</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Editing</strong> – iterative fixes, modifications, and pivots</li>
-          <li style="margin-bottom: 0.5rem;"><strong>Refactoring</strong> – restructuring code for clarity and modularity</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Expansion</strong> - gradually adding features and functionality</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Editing</strong> - iterative fixes, modifications, and pivots</li>
+          <li style="margin-bottom: 0.5rem;"><strong>Refactoring</strong> - restructuring code for clarity and modularity</li>
         </ul>
 
         <p style="margin-bottom: 0;">
-          Comprehensive evaluation of <strong>32 state-of-the-art LLMs</strong> and <strong>3 coding agents</strong> (Aider, Codex, OpenHands)
+          ‣ Comprehensive evaluation of <strong>32 state-of-the-art LLMs</strong> and <strong>3 coding agents</strong> (Aider, Codex, OpenHands)
         </p>
       </div>
     </div>
@@ -1337,7 +1469,7 @@
         <figure>
           <img src="./resources/MT-SEC-built.png" style="width: 100%; height: auto;">
           <figcaption>
-            We transformed single-turn secure coding tasks into realistic 3-turn conversations that mimic how developers actually code. Using an LLM with consitency guardrails, we generated multi-turn expansions, edits, and refactorings, then verified them with security experts. This preserves the original correctness and security tests while adding natural, iterative coding workflows.
+            We transformed single-turn secure coding tasks into realistic 3-turn conversations that mimic how developers actually code. Using an LLM with consitency guardrails, we generated multi-turn expansions, edits, and refactorings, then verified them with security human experts. This preserves the original correctness and security tests while simulating natural, interactive coding workflows.
           </figcaption>
         </figure>
       </div>
@@ -1384,8 +1516,8 @@ function showAveragedTable() {
   
   // Apply default sorting for averaged table (Multi-Turn C&S)
   if (averagedTableData.length > 0) {
-    currentSortColumn.averaged = { column: 1, direction: 'desc' };
-    sortTable('averaged', 1);
+    currentSortColumn.averaged = { column: 2, direction: 'desc' };
+    sortTable('averaged', 2);
   }
 }
 
@@ -1398,15 +1530,15 @@ function showDetailedTable() {
   
   // Apply default sorting for detailed table (Single-Turn C&S)
   if (detailedTableData.length > 0) {
-    currentSortColumn.detailed = { column: 1, direction: 'desc' };
-    sortTable('detailed', 1);
+    currentSortColumn.detailed = { column: 2, direction: 'desc' };
+    sortTable('detailed', 2);
   }
 }
 
 // Table sorting functionality
 let averagedTableData = [];
 let detailedTableData = [];
-let currentSortColumn = { averaged: { column: 3, direction: 'desc' }, detailed: { column: 1, direction: 'desc' } };
+let currentSortColumn = { averaged: { column: 2, direction: 'desc' }, detailed: { column: 1, direction: 'desc' } };
 
 function extractTableData() {
   // Extract averaged table data
@@ -1414,15 +1546,16 @@ function extractTableData() {
   averagedTableData = [];
   
   const averagedRows = averagedTable.querySelectorAll('tr');
-  averagedRows.forEach(row => {
+  averagedRows.forEach((row, index) => {
     const cells = row.querySelectorAll('td');
     if (cells.length > 0) {
       averagedTableData.push({
-        model: cells[0].innerHTML,
-        mtCS: parseFloat(cells[1].textContent),
-        mtCSHtml: cells[1].innerHTML,
-        mtCI: parseFloat(cells[2].textContent),
-        mtCIHtml: cells[2].innerHTML
+        rank: index + 1,
+        model: cells[1].innerHTML,
+        mtCS: parseFloat(cells[2].textContent),
+        mtCSHtml: cells[2].innerHTML,
+        mtCI: parseFloat(cells[3].textContent),
+        mtCIHtml: cells[3].innerHTML
       });
     }
   });
@@ -1436,23 +1569,24 @@ function extractTableData() {
     const cells = row.querySelectorAll('td');
     if (cells.length > 0) {
       detailedTableData.push({
-        model: cells[0].innerHTML,
-        stCS: parseFloat(cells[1].textContent),
-        stCSHtml: cells[1].innerHTML,
-        stCI: parseFloat(cells[2].textContent),
-        stCIHtml: cells[2].innerHTML,
-        mtExpCS: parseFloat(cells[3].textContent),
-        mtExpCSHtml: cells[3].innerHTML,
-        mtExpCI: parseFloat(cells[4].textContent),
-        mtExpCIHtml: cells[4].innerHTML,
-        mtEditCS: parseFloat(cells[5].textContent),
-        mtEditCSHtml: cells[5].innerHTML,
-        mtEditCI: parseFloat(cells[6].textContent),
-        mtEditCIHtml: cells[6].innerHTML,
-        mtRefCS: parseFloat(cells[7].textContent),
-        mtRefCSHtml: cells[7].innerHTML,
-        mtRefCI: parseFloat(cells[8].textContent),
-        mtRefCIHtml: cells[8].innerHTML
+        rank: cells[0].innerHTML,
+        model: cells[1].innerHTML,
+        stCS: parseFloat(cells[2].textContent),
+        stCSHtml: cells[2].innerHTML,
+        stCI: parseFloat(cells[3].textContent),
+        stCIHtml: cells[3].innerHTML,
+        mtExpCS: parseFloat(cells[4].textContent),
+        mtExpCSHtml: cells[4].innerHTML,
+        mtExpCI: parseFloat(cells[5].textContent),
+        mtExpCIHtml: cells[5].innerHTML,
+        mtEditCS: parseFloat(cells[6].textContent),
+        mtEditCSHtml: cells[6].innerHTML,
+        mtEditCI: parseFloat(cells[7].textContent),
+        mtEditCIHtml: cells[7].innerHTML,
+        mtRefCS: parseFloat(cells[8].textContent),
+        mtRefCSHtml: cells[8].innerHTML,
+        mtRefCI: parseFloat(cells[9].textContent),
+        mtRefCIHtml: cells[9].innerHTML
       });
     }
   });
@@ -1463,8 +1597,8 @@ function sortTable(tableType, columnIndex) {
   
   // Column mapping
   const columnKeys = tableType === 'averaged' 
-    ? ['model', 'mtCS', 'mtCI']
-    : ['model', 'stCS', 'stCI', 'mtExpCS', 'mtExpCI', 'mtEditCS', 'mtEditCI', 'mtRefCS', 'mtRefCI'];
+    ? ['rank', 'model', 'mtCS', 'mtCI']
+    : ['rank', 'model', 'stCS', 'stCI', 'mtExpCS', 'mtExpCI', 'mtEditCS', 'mtEditCI', 'mtRefCS', 'mtRefCI'];
   
   const sortKey = columnKeys[columnIndex];
   
@@ -1498,17 +1632,20 @@ function rebuildTable(tableType) {
   
   tbody.innerHTML = '';
   
-  data.forEach(row => {
+  data.forEach((row, index) => {
     const tr = document.createElement('tr');
+    const dynamicRank = index + 1; // Dynamic rank based on current sort order
     
     if (tableType === 'averaged') {
       tr.innerHTML = `
+        <td>${dynamicRank}</td>
         <td>${row.model}</td>
         <td>${row.mtCSHtml}</td>
         <td>${row.mtCIHtml}</td>
       `;
     } else {
       tr.innerHTML = `
+        <td>${dynamicRank}</td>
         <td>${row.model}</td>
         <td>${row.stCSHtml}</td>
         <td>${row.stCIHtml}</td>
@@ -1543,7 +1680,7 @@ function updateSortIndicators(tableType, activeColumn, direction) {
   });
   
   // Add active class to current column
-  const activeHeader = headers[activeColumn - 1]; // -1 because first column (model) is not sortable
+  const activeHeader = headers[activeColumn - (tableType === 'averaged' ? 2 : 2)]; // -2 for averaged (rank+model), -2 for detailed (rank+model)
   if (activeHeader) {
     activeHeader.classList.add('active');
     const arrow = activeHeader.querySelector('.sort-arrow');
@@ -1555,13 +1692,13 @@ function updateSortIndicators(tableType, activeColumn, direction) {
     // Determine and highlight parent column header
     let parentColumnIndex;
     if (tableType === 'averaged') {
-      // Averaged table: columns 1-2 = Multi-Turn only
+      // Averaged table: columns 2-3 = Multi-Turn only
       parentColumnIndex = 0; // Multi-Turn
     } else {
-      // Detailed table: columns 1-2 = Single-Turn, 3-4 = MT-Expansion, 5-6 = MT-Editing, 7-8 = MT-Refactor
-      if (activeColumn <= 2) parentColumnIndex = 0; // Single-Turn
-      else if (activeColumn <= 4) parentColumnIndex = 1; // MT-Expansion
-      else if (activeColumn <= 6) parentColumnIndex = 2; // MT-Editing
+      // Detailed table: columns 2-3 = Single-Turn, 4-5 = MT-Expansion, 6-7 = MT-Editing, 8-9 = MT-Refactor
+      if (activeColumn <= 3) parentColumnIndex = 0; // Single-Turn
+      else if (activeColumn <= 5) parentColumnIndex = 1; // MT-Expansion
+      else if (activeColumn <= 7) parentColumnIndex = 2; // MT-Editing
       else parentColumnIndex = 3; // MT-Refactor
     }
     
@@ -1577,11 +1714,11 @@ document.addEventListener('DOMContentLoaded', function() {
   extractTableData();
   
   // Set up initial sorting for averaged table (Multi-Turn C&S, descending)
-  currentSortColumn.averaged = { column: 1, direction: 'desc' };
-  sortTable('averaged', 1);
+  currentSortColumn.averaged = { column: 2, direction: 'desc' };
+  sortTable('averaged', 2);
   
   // Prepare detailed table data but don't sort yet (will sort when shown)
-  currentSortColumn.detailed = { column: 1, direction: 'desc' };
+  currentSortColumn.detailed = { column: 2, direction: 'desc' };
 });
 </script>
 
